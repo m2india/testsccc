@@ -1,4 +1,4 @@
-﻿//@version=5
+//@version=5
 indicator("Future elite algo", overlay=true, precision=0, explicit_plot_zorder=true, max_labels_count=500)
 
 // Get user input
