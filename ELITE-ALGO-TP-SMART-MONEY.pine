@@ -61,7 +61,7 @@ maType = input.string('McGinley', 'Filter', options=['EMA', 'DEMA', 'TEMA', 'WMA
 Period1 = 3
 Period2 = 7
 Period3 = 20
-PipsMinSepPercent = input(80, 'Filter Strength')
+PipsMinSepPercent = input.int(80, 'Filter Strength')
 
 //-- Moving Average
 ma(type, src, len) =>
@@ -244,12 +244,12 @@ plotshape(buyy == 2, style=shape.xcross, location=location.belowbar, color=color
 
 // Cobra Algo Cloud
 
-source = input(ohlc4, 'Source')
+source = input.source(ohlc4, 'Source')
 ma2 = input.string(title='Cloud MA Type', options=['sma', 'ema', 'wma', 'vwma', 'rma', 'alma', 'hma', 'jma', 'frama-o','frama-m','dema','tema','zlema','smma','kma','tma','gmma','vida','cma','rema'], defval='ema')
 ma = input.string(title='Ribbon MA Type', options=['sma', 'ema', 'wma', 'vwma', 'rma', 'alma', 'hma', 'jma', 'frama-o','frama-m','dema','tema','zlema','smma','kma','tma','gmma','vida','cma','rema'], defval='ema')
 Theme = input.string(title='Theme', options=['Theme 1', 'Theme 2', 'Theme 3', 'No fill'], defval='Theme 1')
-show_cross = input(title='Show Cross', defval=true)
-userib = input(title = 'use ribbon for cross', defval = false, tooltip = 'changes the longema cross(shown as circles by defualt) from the cloud {2,6} cross to ribbon {1,2} cross')
+show_cross = input.bool(true, title='Show Cross')
+userib = input.bool(false, title = 'use ribbon for cross', tooltip = 'changes the longema cross(shown as circles by defualt) from the cloud {2,6} cross to ribbon {1,2} cross')
 
 show_seq = input.bool(defval=true,title='Show sequence', inline = 'show_seq', group = 'sequence')
 seq_back = input.int(4, title = ':lookback', inline = 'show_seq', group = 'sequence')
@@ -363,8 +363,8 @@ calc_smma(source, length) =>
 
 
 //---Kaufman Adaptive Moving Average (KAMA)
-kaufmanFast = input(title='Kaufman Fast', defval=2, inline = 'kaufmanFast', group = 'KMA')
-kaufmanSlow = input(title=': Slow', defval=30, inline = 'kaufmanFast', group = 'KMA')
+kaufmanFast = input.int(2, title='Kaufman Fast', inline = 'kaufmanFast', group = 'KMA')
+kaufmanSlow = input.int(30, title=': Slow', inline = 'kaufmanFast', group = 'KMA')
 
 calc_kama(source, c) =>
     kaMA1 = math.abs(ta.change(source, c))
@@ -610,9 +610,9 @@ plotshape(show_seq and setupCount > 0 and setupCount < 10, style=shape.labelup, 
 
 
 // Input
-fastLength = input(title="Fast Length", defval=12)
-slowLength = input(title="Slow Length", defval=26)
-srrrc = input(title="Source", defval=close)
+fastLength = input.int(12, title="Fast Length")
+slowLength = input.int(26, title="Slow Length")
+srrrc = input.source(close, title="Source")
 signalLength = input.int(title="Signal Smoothing", minval = 1, maxval = 50, defval = 9)
 
 // Data reference
@@ -713,14 +713,14 @@ start = input.float(title='Start', step=0.00005, defval=0.0134)
 increment = input.float(title='Increment', step=0.00005, defval=0.)
 maximum = input.float(title='Maximum', step=0.01, defval=0.21)
 width = input.int(title='Point Width', minval=1, defval=20)
-highlightStartPoints = input(title='Highlight Start Points ?', defval=true)
+highlightStartPoints = input.bool(true, title='Highlight Start Points ?')
 
-Curly_Fries = input(150, title='Fast')
+Curly_Fries = input.int(150, title='Fast')
 
 EmaClD     = input.bool(true, title="Show TP/SL Points", tooltip="Show TP | Stop Loss Points")
 
-Popeyes = input(200, title='Medium')
-Chicken_Sandwich = input(250, 'Slow')
+Popeyes = input.int(200, title='Medium')
+Chicken_Sandwich = input.int(250, 'Slow')
 ema_150 = ta.ema(close, Curly_Fries)
 ema_200 = ta.ema(close, Popeyes)
 ema_250 = ta.ema(close, Chicken_Sandwich)
@@ -765,10 +765,10 @@ kama(ssrc, llen) =>
 
 
 //inputs
-llength = input(50, title='Band Length')
-bd1 = input(9, title='Frontrun Band Deviation')
-bd2 = input(11, title='Initial Band Deviation')
-bd3 = input(14, title='Final Band Deviation')
+llength = input.int(50, title='Band Length')
+bd1 = input.int(9, title='Frontrun Band Deviation')
+bd2 = input.int(11, title='Initial Band Deviation')
+bd3 = input.int(14, title='Final Band Deviation')
 
 //logic
 rg = kama(ta.tr, llength)
@@ -793,10 +793,10 @@ fill(pp4, pp5, color=color.new(#103c3c, 70))
 fill(pp5, pp6, color=color.new(#103c3c, 50))
 
 // Dashboard
-showDashboard = input(true, "Show Dashboard", group="TREND DASHBOARD")
+showDashboard = input.bool(true, "Show Dashboard", group="TREND DASHBOARD")
 locationDashboard = input.string("Middle Right", "Table Location", ["Top Right", "Middle Right", "Bottom Right", "Top Center", "Middle Center", "Bottom Center", "Top Left", "Middle Left", "Bottom Left"], group="TREND DASHBOARD")
-tableTextColor = input(color.new(#b1b3be, 2), "Table Text Color", group="TREND DASHBOARD")
-tableBgColor = input(color.new(#232534,65), "Table Background Color", group="TREND DASHBOARD")
+tableTextColor = input.color(color.new(#b1b3be, 2), "Table Text Color", group="TREND DASHBOARD")
+tableBgColor = input.color(color.new(#232534,65), "Table Background Color", group="TREND DASHBOARD")
 sizeDashboard = input.string("Tiny", "Table Size", ["Large", "Normal", "Small", "Tiny"], group="TREND DASHBOARD")
 
 // Functions
@@ -1157,7 +1157,7 @@ plot(na)
 ========================================================= ============================== levels_tip = "Habilita etiquetas compra/venta /SL"
 atrLen_tip = "Atr para el Calculo de Stoploss y TakeProfit"
 atrRisk_tip = "Multiplicador de Riesgo ATR: Recomendado 1.5 o 1.9"
-levels = input(title='Mostrar Etiquetas de Entrada/SL/TP', defval=true, group=groupEnTpSl, tooltip=levels_tip)
+levels = input.bool(true, title='Mostrar Etiquetas de Entrada/SL/TP', group=groupEnTpSl, tooltip=levels_tip)
 atrLen     = input.int(10, "ATR Length SL ", group=groupEnTpSl, tooltip=atrLen_tip)
 atrRisk = input.float(1.9, "ATR Risk SL", group=groupEnTpSl,tooltip=atrRisk_tip )
 trigger = bull ? 1 : 0
@@ -1226,14 +1226,14 @@ style = input.string('Colored'
   , group = 'Smart Money Concepts'
   , tooltip = STYLE_TOOLTIP)
 
-show_trend = input(false, 'Color Candles'
+show_trend = input.bool(false, 'Color Candles'
   , group = 'Smart Money Concepts'
   , tooltip = COLOR_CANDLES_TOOLTIP)
 
 //----------------------------------------}
 //Internal Structure
 //----------------------------------------{
-show_internals = input(false, 'Show Internal Structure'
+show_internals = input.bool(false, 'Show Internal Structure'
    , group = 'Real Time Internal Structure'
    , tooltip = SHOW_INTERNAL)
 
@@ -1242,7 +1242,7 @@ show_ibull = input.string('All', 'Bullish Structure'
   , inline = 'ibull'
   , group = 'Real Time Internal Structure')
 
-swing_ibull_css = input(#089981, ''
+swing_ibull_css = input.color(#089981, ''
  , inline = 'ibull'
  , group = 'Real Time Internal Structure')
 
@@ -1252,11 +1252,11 @@ show_ibear = input.string('All', 'Bearish Structure'
    , inline = 'ibear'
    , group = 'Real Time Internal Structure')
 
-swing_ibear_css = input(#ffffff, ''
+swing_ibear_css = input.color(#ffffff, ''
  , inline = 'ibear'
  , group = 'Real Time Internal Structure')
 
-ifilter_confluence = input(false, 'Confluence Filter'
+ifilter_confluence = input.bool(false, 'Confluence Filter'
    , group = 'Real Time Internal Structure'
    , tooltip = CONFLUENCE_FILTER)
 
@@ -1267,7 +1267,7 @@ internal_structure_size = input.string('Tiny', 'Internal Label Size'
 //----------------------------------------}
 //Swing Structure
 //----------------------------------------{
-show_Structure = input(false, 'Show Swing Structure'
+show_Structure = input.bool(false, 'Show Swing Structure'
    , group = 'Real Time Swing Structure'
    , tooltip = SHOW_SWING)
 
@@ -1277,7 +1277,7 @@ show_bull = input.string('All', 'Bullish Structure'
  , inline = 'bull'
  , group = 'Real Time Swing Structure')
 
-swing_bull_css = input(#ffffff, ''
+swing_bull_css = input.color(#ffffff, ''
  , inline = 'bull'
  , group = 'Real Time Swing Structure')
 
@@ -1287,7 +1287,7 @@ show_bear = input.string('All', 'Bearish Structure'
    , inline = 'bear'
    , group = 'Real Time Swing Structure')
 
-swing_bear_css = input(#ffffff, ''
+swing_bear_css = input.color(#ffffff, ''
  , inline = 'bear'
  , group = 'Real Time Swing Structure')
 
@@ -1296,7 +1296,7 @@ swing_structure_size = input.string('Small', 'Swing Label Size'
  , group = 'Real Time Swing Structure')
 
 //Swings
-show_swings = input(false, 'Show Swings Points'
+show_swings = input.bool(false, 'Show Swings Points'
    , inline = 'swings'
    , group = 'Real Time Swing Structure'
    , tooltip = SHOW_SWING_POINTS)
@@ -1306,14 +1306,14 @@ length = input.int(50, ''
   , inline = 'swings'
   , group = 'Real Time Swing Structure')
 
-show_hl_swings = input(false, 'Show Strong/Weak High/Low'
+show_hl_swings = input.bool(false, 'Show Strong/Weak High/Low'
   , group = 'Real Time Swing Structure'
   , tooltip = SHOW_SWHL_POINTS)
 
 //----------------------------------------}
 //Order Blocks
 //----------------------------------------{
-show_iob = input(false, 'Internal Order Blocks'
+show_iob = input.bool(false, 'Internal Order Blocks'
    , inline = 'iob'
    , group = 'Order Blocks'
    , tooltip = INTERNAL_OB)
@@ -1322,7 +1322,7 @@ iob_showlast = input.int(5, ''
   , inline = 'iob'
   , group = 'Order Blocks')
 
-show_ob = input(true, 'Swing Order Blocks'
+show_ob = input.bool(true, 'Swing Order Blocks'
   , inline = 'ob'
   , group = 'Order Blocks'
   , tooltip = SWING_OB)
@@ -1352,7 +1352,7 @@ bear_ob_css = input.color(color.new(#ff0015, 70), 'Bearish OB'
 //----------------------------------------}
 //EQH/EQL
 //----------------------------------------{
-show_eq = input(false, 'Equal High/Low'
+show_eq = input.bool(false, 'Equal High/Low'
    , group = 'EQH/EQL'
    , tooltip = SHOW_EQHL)
 
@@ -1375,11 +1375,11 @@ eq_size = input.string('Tiny', 'Label Size'
 //----------------------------------------}
 //Fair Value Gaps
 //----------------------------------------{
-show_fvg = input(true, 'Fair Value Gaps'
+show_fvg = input.bool(true, 'Fair Value Gaps'
    , group = 'Fair Value Gaps'
    , tooltip = SHOW_FVG)
 
-fvg_auto = input(true, "Auto Threshold"
+fvg_auto = input.bool(true, "Auto Threshold"
   , group = 'Fair Value Gaps'
   , tooltip = AUTO_FVG)
 
@@ -1402,7 +1402,7 @@ fvg_extend = input.int(10, "Extend FVG"
 //Previous day/week high/low
 //----------------------------------------{
 //Daily
-show_pdhl = input(true, 'Daily'
+show_pdhl = input.bool(true, 'Daily'
    , inline = 'daily'
    , group = 'Highs & Lows MTF')
 
@@ -1411,12 +1411,12 @@ pdhl_style = input.string('⎯⎯⎯', ''
   , inline = 'daily'
   , group = 'Highs & Lows MTF')
 
-pdhl_css = input(#ffffff, ''
+pdhl_css = input.color(#ffffff, ''
   , inline = 'daily'
   , group = 'Highs & Lows MTF')
 
 //Weekly
-show_pwhl = input(false, 'Weekly'
+show_pwhl = input.bool(false, 'Weekly'
   , inline = 'weekly'
   , group = 'Highs & Lows MTF')
 
@@ -1425,12 +1425,12 @@ pwhl_style = input.string('⎯⎯⎯', ''
  , inline = 'weekly'
  , group = 'Highs & Lows MTF')
 
-pwhl_css = input(#ffffff, ''
+pwhl_css = input.color(#ffffff, ''
  , inline = 'weekly'
  , group = 'Highs & Lows MTF')
 
 //Monthly
-show_pmhl = input(false, 'Monthly'
+show_pmhl = input.bool(false, 'Monthly'
   , inline = 'monthly'
   , group = 'Highs & Lows MTF')
 
@@ -1439,13 +1439,13 @@ pmhl_style = input.string('⎯⎯⎯', ''
  , inline = 'monthly'
  , group = 'Highs & Lows MTF')
 
-pmhl_css = input(#ffffff, ''
+pmhl_css = input.color(#ffffff, ''
  , inline = 'monthly'
  , group = 'Highs & Lows MTF')
 //----------------------------------------}
 //Premium/Discount zones
 //----------------------------------------{
-show_sd = input(true, 'Premium/Discount Zones'
+show_sd = input.bool(true, 'Premium/Discount Zones'
    , group = 'Premium & Discount Zones'
    , tooltip = PED_ZONES)
 
