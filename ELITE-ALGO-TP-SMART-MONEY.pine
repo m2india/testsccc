@@ -911,11 +911,7 @@ ha_avg = (h2 + l22) / 2
 osc_len = 7
 osc_bias = 100 *(c2 - o2)
 osc_smooth = ta.ema(osc_bias, osc_len)
-sigcolor = ((osc_bias > 0) and (osc_bias >= osc_smooth) ? color.new(color.lime, 35) :
-    (osc_bias > 0) and (osc_bias < osc_smooth) ? color.new(color.lime, 75) :
-    (osc_bias < 0) and (osc_bias <= osc_smooth) ? color.new(color.red, 35) :
-    (osc_bias < 0) and (osc_bias > osc_smooth) ? color.new(color.red, 75) :
-    na)
+sigcolor = ((osc_bias > 0) and (osc_bias >= osc_smooth)) ? color.new(color.lime, 35) : ((osc_bias > 0) and (osc_bias < osc_smooth)) ? color.new(color.lime, 75) : ((osc_bias < 0) and (osc_bias <= osc_smooth)) ? color.new(color.red, 35) : ((osc_bias < 0) and (osc_bias > osc_smooth)) ? color.new(color.red, 75) : na
 // }
 
 // Plots {
